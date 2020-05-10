@@ -1,18 +1,18 @@
 let express = require('express');
 let multer = require('multer');
 
-let vt_categories = require('../../model/vt_categories');
-let vt_int_users = require('../../model/vt_int_users');
-let AdminAuth = require('../../commonFunctions/AdminAuth');
+let vt_brands = require('../../../model/vt_brands');
+let vt_int_users = require('../../../model/vt_int_users');
+let AdminAuth = require('../../../commonFunctions/AdminAuth');
 
 let upload = multer();
 let router = express.Router();
 
-router.post('/add-category', upload.none(), async (req, res) => {
+router.post('/add-brand', upload.none(), async (req, res) => {
 
   let body = req.body;
   let token = req.headers.authorization;
-  let category_id = body.id;
+  let brand_id = body.id;
 
   // Get user ID
   let created_by = await getUserId();
@@ -26,14 +26,14 @@ router.post('/add-category', upload.none(), async (req, res) => {
   // Authenticate Admin with token and then proceed
   AdminAuth(req, res, async () => {
 
-    // Check if category name already exist or not
-    if(await categoryCheck()){
+    // Check if brand name already exist or not
+    if(await brandCheck()){
 
-      // If Post ID is present Update post, else create new post
-      if (category_id) {
-        vt_categories.findOne({
+      // If brand ID is present Update brand, else create new brand
+      if (brand_id) {
+        vt_brands.findOne({
           where: {
-            id: category_id
+            id: brand_id
           }
         })
           .then((data) => {
@@ -43,24 +43,24 @@ router.post('/add-category', upload.none(), async (req, res) => {
                 updated_at: new Date()
               })
                 .then(() => {
-                  res.send({ status: 200, message: 'Category Updated!' });
+                  res.send({ status: 200, message: 'Brand Updated!' });
                 })
                 .catch(() => {
-                  res.send({ status: 401, message: 'Failed Updating Category' });
+                  res.send({ status: 401, message: 'Failed Updating Brand' });
                 })
             }
             else {
-              res.send({ status: 401, message: 'No such category with ID : ' + category_id });
+              res.send({ status: 401, message: 'No such brand with ID : ' + brand_id });
             }
           })
       }
       else {
-        vt_categories.create(DbData)
+        vt_brands.create(DbData)
           .then(() => {
-            res.send({ status: 200, message: `Category ${body.name} created!` });
+            res.send({ status: 200, message: `Brand ${body.name} created!` });
           })
           .catch(() => {
-            res.send({ status: 401, message: 'Failed Creating Category' });
+            res.send({ status: 401, message: 'Failed Brand Category' });
           })
       }
     }
@@ -80,15 +80,15 @@ router.post('/add-category', upload.none(), async (req, res) => {
       })
   }
 
-  function categoryCheck(){
-    return vt_categories.findOne({
+  function brandCheck(){
+    return vt_brands.findOne({
       where: {
         name: body.name
       }
     })
       .then((data) => {
         if(data !== null){
-          res.send({ status: 401, message: 'Category Already exist!' });
+          res.send({ status: 401, message: 'Brand Already exist!' });
           return false;
         }
         else{

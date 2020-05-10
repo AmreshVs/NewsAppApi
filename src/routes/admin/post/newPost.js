@@ -1,9 +1,9 @@
 let express = require('express');
 let multer = require('multer');
 
-let vt_posts = require('../../model/vt_posts');
-let vt_int_users = require('../../model/vt_int_users');
-let AdminAuth = require('../../commonFunctions/AdminAuth');
+let vt_posts = require('../../../model/vt_posts');
+let vt_int_users = require('../../../model/vt_int_users');
+let AdminAuth = require('../../../commonFunctions/AdminAuth');
 
 let upload = multer();
 let router = express.Router();

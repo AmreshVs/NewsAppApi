@@ -10,6 +10,7 @@ let vt_int_users = conn.define('vt_int_users', {
   email: DataTypes.STRING,
   pass: DataTypes.STRING,
   user_type: DataTypes.STRING,
+  is_verified: DataTypes.STRING,
   token: DataTypes.STRING,
 });
 

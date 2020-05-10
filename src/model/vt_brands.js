@@ -6,7 +6,9 @@ let vt_brands = conn.define('vt_brands', {
     type: DataTypes.INTEGER,
     primaryKey: true
   },
-  name: DataTypes.STRING
+  name: DataTypes.STRING,
+  created_by: DataTypes.INTEGER,
+  created_at: DataTypes.DATE
 });
 
 module.exports = vt_brands;

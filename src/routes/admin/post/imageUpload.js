@@ -1,8 +1,8 @@
 let express = require('express');
 let multer = require('multer');
 
-let config = require('../../config/config'); 
-let AdminAuth = require('../../commonFunctions/AdminAuth');
+let config = require('../../../config/config'); 
+let AdminAuth = require('../../../commonFunctions/AdminAuth');
 
 // Specifying the storage path
 let storage = multer.diskStorage({
@@ -26,7 +26,7 @@ router.post('/image-upload', upload.single('upload'), async (req, res) => {
       res.status(401).send({ status: 401, message: 'Please add file!' });
     }
     else{
-      res.send({url: config.APP_URL + '/uploads/images/' + file.originalname});
+      res.send({url: '/uploads/images/' + file.originalname});
     }
   });
   

@@ -16,13 +16,14 @@ router.post('/alogin', upload.none(), (req, res) => {
   vt_int_users.findOne({
     where: {
       username: req.body.username,
+      is_verified: 1
     }
   })
     .then((data) => {
       // Compare the hashed password with stored password
       if (data !== null && bcrypt.compareSync(req.body.pass, data.pass)) {
         data.update({
-          token: token
+          token: token,
         })
         .then((data) => {
           res.send({
@@ -44,7 +45,7 @@ router.post('/alogin', upload.none(), (req, res) => {
       }
 
       if(data === null){
-        res.status(401).send({ status: 401, message: 'Not registered! Please signup' });
+        res.status(401).send({ status: 401, message: 'Not registered or awaiting approval!' });
       }
     })
     .catch((err) => {
