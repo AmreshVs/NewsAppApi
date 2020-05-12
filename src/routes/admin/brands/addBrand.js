@@ -24,47 +24,47 @@ router.post('/add-brand', upload.none(), async (req, res) => {
   }
 
   // Authenticate Admin with token and then proceed
-  AdminAuth(req, res, async () => {
+  AdminAuth(req, res, async (status) => {
+    if(status){
+      // Check if brand name already exist or not
+      if(await brandCheck()){
 
-    // Check if brand name already exist or not
-    if(await brandCheck()){
-
-      // If brand ID is present Update brand, else create new brand
-      if (brand_id) {
-        vt_brands.findOne({
-          where: {
-            id: brand_id
-          }
-        })
-          .then((data) => {
-            if (data !== null) {
-              data.update({
-                ...DbData,
-                updated_at: new Date()
-              })
-                .then(() => {
-                  res.send({ status: 200, message: 'Brand Updated!' });
-                })
-                .catch(() => {
-                  res.send({ status: 401, message: 'Failed Updating Brand' });
-                })
-            }
-            else {
-              res.send({ status: 401, message: 'No such brand with ID : ' + brand_id });
+        // If brand ID is present Update brand, else create new brand
+        if (brand_id) {
+          vt_brands.findOne({
+            where: {
+              id: brand_id
             }
           })
-      }
-      else {
-        vt_brands.create(DbData)
-          .then(() => {
-            res.send({ status: 200, message: `Brand ${body.name} created!` });
-          })
-          .catch(() => {
-            res.send({ status: 401, message: 'Failed Brand Category' });
-          })
+            .then((data) => {
+              if (data !== null) {
+                data.update({
+                  ...DbData,
+                  updated_at: new Date()
+                })
+                  .then(() => {
+                    res.send({ status: 200, message: 'Brand Updated!' });
+                  })
+                  .catch(() => {
+                    res.send({ status: 401, message: 'Failed Updating Brand' });
+                  })
+              }
+              else {
+                res.send({ status: 401, message: 'No such brand with ID : ' + brand_id });
+              }
+            })
+        }
+        else {
+          vt_brands.create(DbData)
+            .then(() => {
+              res.send({ status: 200, message: `Brand ${body.name} created!` });
+            })
+            .catch(() => {
+              res.send({ status: 401, message: 'Failed Brand Category' });
+            })
+        }
       }
     }
-
   })
 
 

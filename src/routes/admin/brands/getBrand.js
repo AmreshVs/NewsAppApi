@@ -13,23 +13,25 @@ router.get('/get-brand', upload.none(), (req, res) => {
   let brand_id = req.query.id;
 
   // Authenticate Admin with token and then proceed
-  AdminAuth(req, res, () => {
-    vt_brands.findOne({
-      where:{
-        id: brand_id
-      }
-    })
-      .then((data) => {
-        if(data !== null) {
-          res.status(200).send({ status: 200, data: data });
-        }
-        if(data === null){
-          res.status(401).send({ status: 401, message: 'No Categories found!' });
+  AdminAuth(req, res, (status) => {
+    if(status){
+      vt_brands.findOne({
+        where:{
+          id: brand_id
         }
       })
-      .catch((err) => {
-        console.log(err);
-      })
+        .then((data) => {
+          if(data !== null) {
+            res.status(200).send({ status: 200, data: data });
+          }
+          if(data === null){
+            res.status(401).send({ status: 401, message: 'No Categories found!' });
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        })
+    }
   })
 });
 

@@ -12,23 +12,25 @@ router.get('/delete-category', upload.none(), (req, res) => {
   let category_id = req.query.id;
   
   // Authenticate Admin with token and then proceed
-  AdminAuth(req, res, () => {
-    vt_categories.destroy({
-      where:{
-        id: category_id
-      }
-    })
-      .then((data) => {
-        if(data !== null) {
-          res.status(200).send({ status: 200, message: 'Category deleted!' });
-        }
-        if(data === null){
-          res.status(401).send({ status: 401, message: 'No Category found!' });
+  AdminAuth(req, res, (status) => {
+    if(status){
+      vt_categories.destroy({
+        where:{
+          id: category_id
         }
       })
-      .catch((err) => {
-        console.log(err);
-      })
+        .then((data) => {
+          if(data !== null) {
+            res.status(200).send({ status: 200, message: 'Category deleted!' });
+          }
+          if(data === null){
+            res.status(401).send({ status: 401, message: 'No Category found!' });
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        })
+    }
   })
 });
 

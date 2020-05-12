@@ -1,6 +1,6 @@
-let vt_int_users = require('../model/vt_int_users');
+let vt_users = require('../model/vt_users');
 
-const AdminAuth = (req, res, fn) => {
+const UserAuth = (req, res, fn) => {
   let token = req.headers.authorization;
 
   if(token === undefined){
@@ -8,7 +8,7 @@ const AdminAuth = (req, res, fn) => {
     return fn(false);
   }
 
-  vt_int_users.findOne({
+  vt_users.findOne({
     where:{
       token: token,
       is_verified: 1
@@ -28,4 +28,4 @@ const AdminAuth = (req, res, fn) => {
   })
 }
 
-module.exports = AdminAuth;
+module.exports = UserAuth;

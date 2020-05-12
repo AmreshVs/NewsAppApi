@@ -24,47 +24,47 @@ router.post('/add-category', upload.none(), async (req, res) => {
   }
 
   // Authenticate Admin with token and then proceed
-  AdminAuth(req, res, async () => {
+  AdminAuth(req, res, async (status) => {
+    if(status){
+      // Check if category name already exist or not
+      if(await categoryCheck()){
 
-    // Check if category name already exist or not
-    if(await categoryCheck()){
-
-      // If Category ID is present Update category, else create new category
-      if (category_id) {
-        vt_categories.findOne({
-          where: {
-            id: category_id
-          }
-        })
-          .then((data) => {
-            if (data !== null) {
-              data.update({
-                ...DbData,
-                updated_at: new Date()
-              })
-                .then(() => {
-                  res.send({ status: 200, message: 'Category Updated!' });
-                })
-                .catch(() => {
-                  res.send({ status: 401, message: 'Failed Updating Category' });
-                })
-            }
-            else {
-              res.send({ status: 401, message: 'No such category with ID : ' + category_id });
+        // If Category ID is present Update category, else create new category
+        if (category_id) {
+          vt_categories.findOne({
+            where: {
+              id: category_id
             }
           })
-      }
-      else {
-        vt_categories.create(DbData)
-          .then(() => {
-            res.send({ status: 200, message: `Category ${body.name} created!` });
-          })
-          .catch(() => {
-            res.send({ status: 401, message: 'Failed Creating Category' });
-          })
+            .then((data) => {
+              if (data !== null) {
+                data.update({
+                  ...DbData,
+                  updated_at: new Date()
+                })
+                  .then(() => {
+                    res.send({ status: 200, message: 'Category Updated!' });
+                  })
+                  .catch(() => {
+                    res.send({ status: 401, message: 'Failed Updating Category' });
+                  })
+              }
+              else {
+                res.send({ status: 401, message: 'No such category with ID : ' + category_id });
+              }
+            })
+        }
+        else {
+          vt_categories.create(DbData)
+            .then(() => {
+              res.send({ status: 200, message: `Category ${body.name} created!` });
+            })
+            .catch(() => {
+              res.send({ status: 401, message: 'Failed Creating Category' });
+            })
+        }
       }
     }
-
   })
 
 

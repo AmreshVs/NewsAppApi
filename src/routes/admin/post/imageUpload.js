@@ -20,13 +20,15 @@ let router = express.Router();
 // Get uploaded file from Form name - Upload
 router.post('/image-upload', upload.single('upload'), async (req, res) => {
   // Authenticate Admin with token and then proceed
-  AdminAuth(req, res, () => {
-    const file = req.file;
-    if (!file) {
-      res.status(401).send({ status: 401, message: 'Please add file!' });
-    }
-    else{
-      res.send({url: '/uploads/images/' + file.originalname});
+  AdminAuth(req, res, (status) => {
+    if(status){
+      const file = req.file;
+      if (!file) {
+        res.status(401).send({ status: 401, message: 'Please add file!' });
+      }
+      else{
+        res.send({url: '/uploads/images/' + file.originalname});
+      }
     }
   });
   
