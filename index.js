@@ -30,6 +30,10 @@ let deleteBrand = require('./src/routes/admin/brands/deleteBrand'); // GET - /de
 
 let addComment = require('./src/routes/comments/addComment'); // POST - /add-comment
 
+let addPdf = require('./src/routes/admin/pdf/addPdf');
+let getAllPdf = require('./src/routes/admin/pdf/getAllPdf');
+let pdfUpload = require('./src/routes/admin/pdf/pdfUpload');
+
 // To solve CORS error
 app.use(cors());
 
@@ -48,7 +52,8 @@ app.use([
   alogin, asignup, imageUpload, getCategory, 
   newPost, getPost, getAllPost, deletePost, addCategory,
   deleteCategory, getAllCategory, addBrand, getBrand,
-  getAllBrand, deleteBrand, categories, brands
+  getAllBrand, deleteBrand, categories, brands, pdfUpload,
+  addPdf, getAllPdf
 ]);
 
 console.log("Running on port " + process.env.PORT);

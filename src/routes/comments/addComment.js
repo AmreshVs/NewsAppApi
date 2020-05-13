@@ -2,7 +2,7 @@ let express = require('express');
 let multer = require('multer');
 
 let vt_comments = require('../../model/vt_comments');
-let UserAuth = require('../../commonFunctions/UserAuth');
+let UserOrAdminAuth = require('../../commonFunctions/UserOrAdminAuth');
 
 let upload = multer();
 let router = express.Router();
@@ -16,19 +16,20 @@ router.post('/add-comment', upload.none(), (req, res) => {
     comment_type: body.comment_type,
     reply_to: body.reply_to,
     reply_id: body.reply_id,
-    is_verified: 0,
+    is_verified: body.is_verified,
     posted_at: new Date()
   }
   
   // Authenticate User with token and then proceed
-  UserAuth(req, res, (status) => {
+  UserOrAdminAuth(req, res, (status) => {
     if(status){
       vt_comments.create(dbData)
         .then(() => {
-          res.status(200).send({ status: 200, message: 'Comment will be added once verified!'});
+          res.status(200).send({ status: 200, message: body.is_verified === 1 ? 'Comment Added' : 'Comment will be added once verified!' });
         })
-        .catch(() => {
-          res.status(401).send({ status: 200, message: 'Error posting comment'});
+        .catch((err) => {
+          console.log(err);
+          res.status(401).send({ status: 401, message: 'Error posting comment' });
         })
     }
   })
