@@ -51,6 +51,7 @@ router.get('/get-all-post', upload.none(), async (req, res) => {
 
             data = data.rows.map((item) => {
 
+              // Send in the Categories and brands Id with comma seperated (1,2) to Category and brand names (Media, Breaking News)
               let categories = joinCategory(item.categories);
               let brands = joinBrand(item.brands)
               

@@ -1,7 +1,7 @@
 let express = require('express');
 let multer = require('multer');
 
-let vt_posts = require('../../../model/vt_posts');
+let vt_videos = require('../../../model/vt_videos');
 let vt_comments = require('../../../model/vt_comments');
 let vt_users = require('../../../model/vt_users');
 let AdminAuth = require('../../../commonFunctions/AdminAuth');
@@ -9,33 +9,34 @@ let AdminAuth = require('../../../commonFunctions/AdminAuth');
 let upload = multer();
 let router = express.Router();
 
-router.get('/get-post', upload.none(), (req, res) => {
+router.get('/get-video', upload.none(), (req, res) => {
   
-  let post_id = req.query.id;
+  let video_id = req.query.id;
   
   // Authenticate Admin with token and then proceed
   AdminAuth(req, res, (status) => {
     if(status){
-      vt_posts.findOne({
+      vt_videos.findOne({
         where:{
-          id: post_id
+          id: video_id
         },
       })
         .then(async (data) => {
           
-          let {id, title, content, categories, tags, brands, featured_img, created_by, created_at, updated_at} = data;
+          let {id, title, description, categories, tags, brands, featured_img, url, created_by, created_at, updated_at} = data;
 
-          // Get comments based on post ID
+          // Get comments based on video ID
           let comments = await getComments(id);
           
           let result = {
             id: id,
-            featured_img: featured_img,
             title: title,
-            content: content,
+            description: description,
             categories: categories,
             tags: tags,
             brands: brands,
+            featured_img: featured_img,
+            url: url,
             created_by: created_by,
             created_at: created_at,
             updated_at: updated_at,
@@ -46,7 +47,7 @@ router.get('/get-post', upload.none(), (req, res) => {
             res.status(200).send({ status: 200, message: '', data: result });
           }
           if(data === null){
-            res.status(401).send({ status: 401, message: 'No Post found!' });
+            res.status(401).send({ status: 401, message: 'No video found!' });
           }
         })
         .catch((err) => {
@@ -62,7 +63,7 @@ async function getComments(id){
   const creator = vt_comments.belongsTo(vt_users, { foreignKey: 'user_id' });
   return await vt_comments.findAll({
     where:{
-      comment_type: 'post',
+      comment_type: 'video',
       reply_to: 'post',
       reply_id: id
     },
@@ -88,13 +89,13 @@ async function getComments(id){
   })
 }
 
-async function getInnerComments(id, fn){
+async function getInnerComments(id){
   let comments = [];
   // Adding Foreign Key Association with vt_int_users to get the name of the user
   const creator = vt_comments.belongsTo(vt_users, { foreignKey: 'user_id' });
   return await vt_comments.findAll({
     where:{
-      comment_type: 'post',
+      comment_type: 'video',
       reply_to: 'comment',
       reply_id: id
     },

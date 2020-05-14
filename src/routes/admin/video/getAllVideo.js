@@ -3,7 +3,7 @@ let multer = require('multer');
 let _ = require('lodash');
 
 let config = require('../../../config/config');
-let vt_pdfs = require('../../../model/vt_pdfs');
+let vt_videos = require('../../../model/vt_videos');
 let vt_categories = require('../../../model/vt_categories');
 let vt_brands = require('../../../model/vt_brands');
 let vt_int_users = require('../../../model/vt_int_users');
@@ -12,7 +12,7 @@ let AdminAuth = require('../../../commonFunctions/AdminAuth');
 let upload = multer();
 let router = express.Router();
 
-router.get('/get-all-pdf', upload.none(), async (req, res) => {
+router.get('/get-all-video', upload.none(), async (req, res) => {
 
   let page = parseInt(req.query.page);
   let size = parseInt(req.query.size);
@@ -22,13 +22,13 @@ router.get('/get-all-pdf', upload.none(), async (req, res) => {
   global.brand_data = await getBrand();
 
   // Adding Foreign Key Association with vt_int_users to get the name of the user
-  const creator = vt_pdfs.belongsTo(vt_int_users, { foreignKey: 'created_by' });
+  const creator = vt_videos.belongsTo(vt_int_users, { foreignKey: 'created_by' });
 
   // Authenticate Admin with token and then proceed
   AdminAuth(req, res, (status) => {
     if(status){
       // Returns rows that match the condition and the total row counts aswell
-      vt_pdfs.findAndCountAll({
+      vt_videos.findAndCountAll({
         limit: size,
         offset: page === 1 ? 0 : page === 2 ? size : (page - 1) * size,
         order: [
@@ -42,8 +42,8 @@ router.get('/get-all-pdf', upload.none(), async (req, res) => {
             // Pagination Logic
             let remaining = data.count - (page * size) > 0 ? data.count - (page * size) : 0;
             let pagination = {
-              nextPageUrl: remaining === 0 ? '' : `${config.APP_URL}/get-all-pdf?page=${page + 1}&size=${size}`,
-              prevPageUrl: page === 1 ? '' : `${config.APP_URL}/get-all-pdf?page=${page - 1}&size=${size}`,
+              nextPageUrl: remaining === 0 ? '' : `${config.APP_URL}/get-all-video?page=${page + 1}&size=${size}`,
+              prevPageUrl: page === 1 ? '' : `${config.APP_URL}/get-all-video?page=${page - 1}&size=${size}`,
               totalRows: data.count,
               totalPages: Math.ceil(data.count / size),
               remaining: remaining

@@ -32,7 +32,15 @@ let addComment = require('./src/routes/comments/addComment'); // POST - /add-com
 
 let addPdf = require('./src/routes/admin/pdf/addPdf');
 let getAllPdf = require('./src/routes/admin/pdf/getAllPdf');
+let getPdf = require('./src/routes/admin/pdf/getPdf');
+let deletePdf = require('./src/routes/admin/pdf/deletePdf');
 let pdfUpload = require('./src/routes/admin/pdf/pdfUpload');
+
+let addVideo = require('./src/routes/admin/video/addVideo');
+let getAllVideo = require('./src/routes/admin/video/getAllVideo');
+let getVideo = require('./src/routes/admin/video/getVideo');
+let deleteVideo = require('./src/routes/admin/video/deleteVideo');
+let videoUpload = require('./src/routes/admin/video/videoUpload');
 
 // To solve CORS error
 app.use(cors());
@@ -53,7 +61,8 @@ app.use([
   newPost, getPost, getAllPost, deletePost, addCategory,
   deleteCategory, getAllCategory, addBrand, getBrand,
   getAllBrand, deleteBrand, categories, brands, pdfUpload,
-  addPdf, getAllPdf
+  addPdf, getAllPdf, getPdf, deletePdf, videoUpload, addVideo,
+  getAllVideo, getVideo, deleteVideo
 ]);
 
 console.log("Running on port " + process.env.PORT);
