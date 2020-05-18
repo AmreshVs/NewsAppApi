@@ -6,7 +6,7 @@ let cors = require('cors');
 
 let signup = require('./src/routes/signup');
 let login = require('./src/routes/login');
-let imageUpload = require('./src/routes/admin/post/imageUpload');
+let sendOtp = require('./src/routes/common/sendOtp'); // POST - send-otp
 
 let alogin = require('./src/routes/admin/alogin'); // POST - /alogin
 let asignup = require('./src/routes/admin/asignup'); // POST - /asignup
@@ -15,6 +15,7 @@ let newPost = require('./src/routes/admin/post/newPost'); // POST - /new-post
 let getPost = require('./src/routes/admin/post/getPost'); // GET - /get-post
 let getAllPost = require('./src/routes/admin/post/getAllPost'); // GET - /get-all-post
 let deletePost = require('./src/routes/admin/post/deletePost'); // GET - /delete-post
+let imageUpload = require('./src/routes/admin/post/imageUpload');
 
 let categories = require('./src/routes/admin/categories/categories'); // GET - /categories
 let addCategory = require('./src/routes/admin/categories/addCategory'); // POST - /add-category
@@ -42,6 +43,11 @@ let getVideo = require('./src/routes/admin/video/getVideo');
 let deleteVideo = require('./src/routes/admin/video/deleteVideo');
 let videoUpload = require('./src/routes/admin/video/videoUpload');
 
+// Dummy Data API
+let dummyPosts = require('./src/dummyData/dummyPosts');
+let dummyPdfs = require('./src/dummyData/dummyPdfs');
+let dummyVideos = require('./src/dummyData/dummyVideos');
+
 // To solve CORS error
 app.use(cors());
 
@@ -53,7 +59,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
 // App User Routes
-app.use([signup, login, addComment]);
+app.use([signup, login, addComment, sendOtp]);
 
 // Admin Routes
 app.use([
@@ -64,6 +70,9 @@ app.use([
   addPdf, getAllPdf, getPdf, deletePdf, videoUpload, addVideo,
   getAllVideo, getVideo, deleteVideo
 ]);
+
+// Dummy Data Routes
+app.use([dummyPosts, dummyPdfs, dummyVideos]);
 
 console.log("Running on port " + process.env.PORT);
 app.listen(process.env.PORT);

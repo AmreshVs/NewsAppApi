@@ -4,17 +4,19 @@ let jwt = require('jsonwebtoken');
 
 let config = require('../config/config');
 let vt_users = require('../model/vt_users');
+let SendOtp = require('../commonFunctions/sendOtp');
 let router = express.Router();
 let upload = multer();
 
 router.post('/signup', upload.none(), (req, res) => {
 
+  let body = req.body;
   // Generate Token for Authentication
   let token = jwt.sign({id: body.mobile}, config.secret);
+  
   // let otp = Math.floor(Math.random() * (9999 - 1000 + 1)) + 1000;
   let otp = 1234;
 
-  let body = req.body;
   let DbData = {
     fullname: body.fullname,
     citystate: body.citystate,
@@ -35,9 +37,14 @@ router.post('/signup', upload.none(), (req, res) => {
         // If mobile number not present, Create user and set the user verified
         if(!body.otp){
           vt_users.create(DbData).then(() => {
-            res.send({status: 'success', message: 'OTP sent to registered mobile number'});
+            if(SendOtp(body.mobile, `Use ${otp} as your OTP to verify ${body.autoOtpHash}`)){
+              res.send({status: 200, message: 'OTP sent to registered mobile number'});
+            }
           })
         }
+      }
+      else if(data != null && !body.otp){
+        res.send({status: 401, message: 'You are already Valar Tamil user, Please Signin'});
       }
       else{
         vt_users.findOne({
@@ -52,7 +59,7 @@ router.post('/signup', upload.none(), (req, res) => {
           })
           .then((data) => {
             res.send({
-              status: 'success',
+              status: 200,
               message: 'Signup Success',
               data:{
                 user_id: data.id,
@@ -77,24 +84,24 @@ const validate = (data, res) => {
 
   // Validations
   if(!data.fullname){
-    res.send({status: 'error', message: 'Fullname cannot be empty!'});
+    res.send({status: 401, message: 'Fullname cannot be empty!'});
     return false;
   }
 
   else if(!data.mobile){
-    res.send({status: 'error', message: 'Mobile Number cannot be empty!'});
+    res.send({status: 401, message: 'Mobile Number cannot be empty!'});
     return false;
   }
 
   else if(!data.citystate){
-    res.send({status: 'error', message: 'City & State cannot be empty!'});
+    res.send({status: 401, message: 'City & State cannot be empty!'});
     return false;
   }
 
   // Phone Number validation
   let regx = /^(?:(?:\+|0{0,2})91(\s*[\ -]\s*)?|[0]?)?[789]\d{9}|(\d[ -]?){10}\d$/;
   if(!regx.test(data.mobile)){
-    res.send({status: 'error', message: 'Invalid mobile number!'});
+    res.send({status: 401, message: 'Invalid mobile number!'});
     return false;
   }
   return true;
