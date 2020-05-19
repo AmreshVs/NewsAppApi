@@ -1,7 +1,7 @@
 let conn = require('../db/connect');
 let DataTypes = require('sequelize');
 
-let vt_posts = conn.define('vt_posts', {
+let vt_news = conn.define('vt_news', {
   id: {
     type: DataTypes.INTEGER,
     primaryKey: true
@@ -17,4 +17,4 @@ let vt_posts = conn.define('vt_posts', {
   updated_at: DataTypes.DATE
 });
 
-module.exports = vt_posts;
+module.exports = vt_news;

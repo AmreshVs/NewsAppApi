@@ -3,7 +3,7 @@ let multer = require('multer');
 let _ = require('lodash');
 
 let config = require('../../../config/config');
-let vt_posts = require('../../../model/vt_posts');
+let vt_news = require('../../../model/vt_news');
 let vt_categories = require('../../../model/vt_categories');
 let vt_brands = require('../../../model/vt_brands');
 let vt_int_users = require('../../../model/vt_int_users');
@@ -22,13 +22,13 @@ router.get('/get-all-post', upload.none(), async (req, res) => {
   global.brand_data = await getBrand();
 
   // Adding Foreign Key Association with vt_int_users to get the name of the user
-  const creator = vt_posts.belongsTo(vt_int_users, { foreignKey: 'created_by' });
+  const creator = vt_news.belongsTo(vt_int_users, { foreignKey: 'created_by' });
 
   // Authenticate Admin with token and then proceed
   AdminAuth(req, res, (status) => {
     if(status){
       // Returns rows that match the condition and the total row counts aswell
-      vt_posts.findAndCountAll({
+      vt_news.findAndCountAll({
         limit: size,
         offset: page === 1 ? 0 : page === 2 ? size : (page - 1) * size,
         order: [

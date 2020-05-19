@@ -1,7 +1,7 @@
 let express = require('express');
 let multer = require('multer');
 
-let vt_posts = require('../../../model/vt_posts');
+let vt_news = require('../../../model/vt_news');
 let vt_comments = require('../../../model/vt_comments');
 let vt_users = require('../../../model/vt_users');
 let AdminAuth = require('../../../commonFunctions/AdminAuth');
@@ -9,14 +9,14 @@ let AdminAuth = require('../../../commonFunctions/AdminAuth');
 let upload = multer();
 let router = express.Router();
 
-router.get('/get-post', upload.none(), (req, res) => {
+router.get('/get-news', upload.none(), (req, res) => {
   
   let post_id = req.query.id;
   
   // Authenticate Admin with token and then proceed
   AdminAuth(req, res, (status) => {
     if(status){
-      vt_posts.findOne({
+      vt_news.findOne({
         where:{
           id: post_id
         },

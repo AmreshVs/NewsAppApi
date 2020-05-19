@@ -1,14 +1,14 @@
 let express = require('express');
 let multer = require('multer');
 
-let vt_posts = require('../../../model/vt_posts');
+let vt_news = require('../../../model/vt_news');
 let vt_int_users = require('../../../model/vt_int_users');
 let AdminAuth = require('../../../commonFunctions/AdminAuth');
 
 let upload = multer();
 let router = express.Router();
 
-router.post('/new-post', upload.none(), async (req, res) => {
+router.post('/new-news', upload.none(), async (req, res) => {
 
   let body = req.body;
   let token = req.headers.authorization;
@@ -36,7 +36,7 @@ router.post('/new-post', upload.none(), async (req, res) => {
     if(status){
       // If Post ID is present Update post, else create new post
       if (post_id) {
-        vt_posts.findOne({
+        vt_news.findOne({
           where: {
             id: post_id
           }
@@ -60,7 +60,7 @@ router.post('/new-post', upload.none(), async (req, res) => {
           })
       }
       else {
-        vt_posts.create(DbData)
+        vt_news.create(DbData)
           .then(() => {
             res.send({ status: 200, message: 'Post created!' });
           })

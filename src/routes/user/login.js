@@ -2,9 +2,9 @@ let express = require('express');
 let multer = require('multer');
 let jwt = require('jsonwebtoken');
 
-let config = require('../config/config');
-let vt_users = require('../model/vt_users');
-let SendOtp = require('../commonFunctions/sendOtp');
+let config = require('../../config/config');
+let vt_users = require('../../model/vt_users');
+let SendOtp = require('../../commonFunctions/sendOtp');
 
 let upload = multer();
 let router = express.Router();

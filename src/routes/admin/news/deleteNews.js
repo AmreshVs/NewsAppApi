@@ -1,20 +1,20 @@
 let express = require('express');
 let multer = require('multer');
 
-let vt_posts = require('../../../model/vt_posts');
+let vt_news = require('../../../model/vt_news');
 let AdminAuth = require('../../../commonFunctions/AdminAuth');
 
 let upload = multer();
 let router = express.Router();
 
-router.get('/delete-post', upload.none(), (req, res) => {
+router.get('/delete-news', upload.none(), (req, res) => {
   
   let post_id = req.query.id;
   
   // Authenticate Admin with token and then proceed
   AdminAuth(req, res, (status) => {
     if(status){
-      vt_posts.destroy({
+      vt_news.destroy({
         where:{
           id: post_id
         }
