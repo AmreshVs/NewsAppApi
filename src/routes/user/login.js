@@ -12,7 +12,6 @@ let router = express.Router();
 router.post('/login', upload.none(), (req, res) => {
   
   let body = req.body;
-
   // Generate token for Authentication
   let token = jwt.sign({ id: body.email }, config.secret);
   

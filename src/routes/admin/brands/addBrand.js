@@ -26,9 +26,9 @@ router.post('/add-brand', upload.none(), async (req, res) => {
   // Authenticate Admin with token and then proceed
   AdminAuth(req, res, async (status) => {
     if(status){
+      
       // Check if brand name already exist or not
       if(await brandCheck()){
-
         // If brand ID is present Update brand, else create new brand
         if (brand_id) {
           vt_brands.findOne({

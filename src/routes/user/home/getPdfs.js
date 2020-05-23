@@ -14,10 +14,11 @@ const getPdfs = async (page, size) => {
       if (data !== null) {
         return data.map((item) => {
           return {
+            type: 'pdfs',
             id: item.id,
             featured_img: item.featured_img,
             title: item.title,
-            updated_on: item.updated_at !== null ? item.updated_at : item.created_at !== null ? item.created_at : '-'
+            posted_on: item.updated_at !== null ? item.updated_at : item.created_at !== null ? item.created_at : '-'
           }
         })
       }

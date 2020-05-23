@@ -13,10 +13,12 @@ const getVideos = async (page, size) => {
       if (videosData !== null) {
         return videosData.rows.map((item) => {
           return {
+            type: 'videos',
             id: item.id,
+            url: item.url,
             featured_img: item.featured_img,
             title: item.title,
-            updated_on: item.updated_at !== null ? item.updated_at : item.created_at !== null ? item.created_at : '-'
+            posted_on: item.updated_at !== null ? item.updated_at : item.created_at !== null ? item.created_at : '-'
           }
         })
       }

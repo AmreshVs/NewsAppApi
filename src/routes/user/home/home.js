@@ -35,9 +35,11 @@ router.get('/home', upload.none(), (req, res) => {
       let result = {
         status: 200,
         liveVideo: page === 1 ? 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4' : '',
-        videos: getVideosData,
-        news: getNewsData,
-        pdfs: getPdfsData,
+        data:{
+          videos: getVideosData,
+          news: getNewsData,
+          pdfs: getPdfsData,
+        },
         pagination: pagination
       }
 

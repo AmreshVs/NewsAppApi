@@ -14,11 +14,12 @@ const getNews = async (page, size) => {
       if (newsData !== null) {
         return newsData.map((news) => {
           return {
+            type: 'news',
             id: news.id,
             featured_img: news.featured_img,
             title: news.title,
             // content: (news.content).replace(/<[^>]*>?/gm, '').replace(/^(.{100}[^\s]*).*/, "$1"),
-            updated_on: news.updated_at !== null ? news.updated_at : news.created_at !== null ? news.created_at : '-'
+            posted_on: news.updated_at !== null ? news.updated_at : news.created_at !== null ? news.created_at : '-'
           }
         })
       }
