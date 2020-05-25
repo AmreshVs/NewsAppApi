@@ -6,13 +6,14 @@ const getVideos = async (page, size) => {
     limit: size,
     offset: page === 1 ? 0 : page === 2 ? size : (page - 1) * size,
     order: [
-      ['id', 'ASC']
+      ['created_at', 'DESC']
     ],
   })
     .then((videosData) => {
+      let videos = {};
       if (videosData !== null) {
-        return videosData.rows.map((item) => {
-          return {
+        for(let item of videosData.rows){
+          videos['v'+item.id] = {
             type: 'videos',
             id: item.id,
             url: item.url,
@@ -20,7 +21,8 @@ const getVideos = async (page, size) => {
             title: item.title,
             posted_on: item.updated_at !== null ? item.updated_at : item.created_at !== null ? item.created_at : '-'
           }
-        })
+        }
+        return videos;
       }
     })
     .catch((err) => {

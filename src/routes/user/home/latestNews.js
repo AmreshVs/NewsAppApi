@@ -1,5 +1,6 @@
 let express = require('express');
 let multer = require('multer');
+let _ = require('lodash');
 
 let upload = multer();
 let router = express.Router();
@@ -8,9 +9,10 @@ let config = require('../../../config/config');
 let UserAuth = require('../../../commonFunctions/UserAuth');
 let getNews = require('./getNews');
 let getPdfs = require('./getPdfs');
+let getTodayPdfs = require('./getTodayPdfs');
 let getVideos = require('./getVideos');
 
-router.get('/home', upload.none(), (req, res) => {
+router.get('/latest-news', upload.none(), (req, res) => {
   
   let page = parseInt(req.query.page);
   let size = parseInt(req.query.size);
@@ -32,14 +34,11 @@ router.get('/home', upload.none(), (req, res) => {
         // remaining: remaining
       }
 
+      let AllNewsData = _.sortBy({ ...getVideosData, ...getNewsData }, {'posted_on': 'desc'});
+
       let result = {
         status: 200,
-        liveVideo: page === 1 ? 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4' : '',
-        data:{
-          videos: getVideosData,
-          news: getNewsData,
-          pdfs: getPdfsData,
-        },
+        data: AllNewsData,
         pagination: pagination
       }
 

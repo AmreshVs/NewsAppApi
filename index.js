@@ -6,7 +6,8 @@ let cors = require('cors');
 
 let signup = require('./src/routes/user/signup'); // POST - /signup
 let login = require('./src/routes/user/login'); // POST - /login
-let home = require('./src/routes/user/home/home'); // GET - /home
+let latestNews = require('./src/routes/user/home/latestNews'); // GET - /latest-news
+let topSection = require('./src/routes/user/home/topSection'); // GET - /top-section  
 let sendOtp = require('./src/routes/common/sendOtp'); // POST - /send-otp
 
 let alogin = require('./src/routes/admin/alogin'); // POST - /alogin
@@ -60,7 +61,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
 // App User Routes
-app.use([signup, login, addComment, sendOtp, home]);
+app.use([signup, login, addComment, sendOtp, latestNews, topSection]);
 
 // Admin Routes
 app.use([

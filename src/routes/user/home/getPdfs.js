@@ -7,7 +7,7 @@ const getPdfs = async (page, size) => {
     limit: size,
     offset: page === 1 ? 0 : page === 2 ? size : (page - 1) * size,
     order: [
-      ['id', 'ASC']
+      ['created_at', 'DESC']
     ],
   })
     .then((data) => {

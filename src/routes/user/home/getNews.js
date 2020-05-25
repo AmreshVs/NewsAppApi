@@ -7,13 +7,14 @@ const getNews = async (page, size) => {
     limit: size,
     offset: page === 1 ? 0 : page === 2 ? size : (page - 1) * size,
     order: [
-      ['id', 'ASC']
+      ['created_at', 'DESC']
     ],
   })
     .then((newsData) => {
+      let newsAll = {};
       if (newsData !== null) {
-        return newsData.map((news) => {
-          return {
+        for(let news of newsData){
+          newsAll['n'+news.id] = {
             type: 'news',
             id: news.id,
             featured_img: news.featured_img,
@@ -21,7 +22,8 @@ const getNews = async (page, size) => {
             // content: (news.content).replace(/<[^>]*>?/gm, '').replace(/^(.{100}[^\s]*).*/, "$1"),
             posted_on: news.updated_at !== null ? news.updated_at : news.created_at !== null ? news.created_at : '-'
           }
-        })
+        }
+        return newsAll;
       }
     })
     .catch((err) => {
