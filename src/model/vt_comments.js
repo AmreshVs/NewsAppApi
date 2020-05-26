@@ -1,7 +1,7 @@
 let conn = require('../db/connect');
 let DataTypes = require('sequelize');
 
-let vt_comments = conn.define('vt_comments', {
+let vt_comments = conn.define('vt_comment', {
   id: {
     type: DataTypes.INTEGER,
     primaryKey: true

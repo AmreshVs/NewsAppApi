@@ -1,4 +1,5 @@
 let vt_news = require('../../../model/vt_news');
+let vt_comments = require('../../../model/vt_comments');
 
 const getNews = async (page, size) => {
 
@@ -10,7 +11,7 @@ const getNews = async (page, size) => {
       ['created_at', 'DESC']
     ],
   })
-    .then((newsData) => {
+    .then(async (newsData) => {
       let newsAll = {};
       if (newsData !== null) {
         for(let news of newsData){
@@ -19,7 +20,7 @@ const getNews = async (page, size) => {
             id: news.id,
             featured_img: news.featured_img,
             title: news.title,
-            // content: (news.content).replace(/<[^>]*>?/gm, '').replace(/^(.{100}[^\s]*).*/, "$1"),
+            comments: await getComments(news.id),
             posted_on: news.updated_at !== null ? news.updated_at : news.created_at !== null ? news.created_at : '-'
           }
         }
@@ -29,6 +30,17 @@ const getNews = async (page, size) => {
     .catch((err) => {
       console.log(err);
     })
+}
+
+const getComments = async (id) => {
+  return await vt_comments.count({
+    where: {
+      id: id
+    }
+  })
+  .then((data) => {
+    return data;
+  })
 }
 
 module.exports = getNews;
