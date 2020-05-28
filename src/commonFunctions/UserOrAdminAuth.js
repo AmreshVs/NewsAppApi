@@ -33,9 +33,13 @@ const UserOrAdminAuth = (req, res, fn) => {
         }
       })
     }
+    else{
+      return fn(true);
+    }
   })
   .catch(() => {
     res.status(401).send({status: 401, message: 'Unable to Authenticate'});
+    return fn(false);
   })
 }
 

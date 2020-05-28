@@ -22,7 +22,9 @@ router.post('/add-comment', upload.none(), (req, res) => {
   
   // Authenticate User with token and then proceed
   UserOrAdminAuth(req, res, (status) => {
+
     if(status){
+
       vt_comments.create(dbData)
         .then(() => {
           res.status(200).send({ status: 200, message: body.is_verified === 1 ? 'Comment Added' : 'Comment will be added once verified!' });

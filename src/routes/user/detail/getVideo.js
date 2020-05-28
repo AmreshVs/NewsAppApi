@@ -1,20 +1,24 @@
 let express = require('express');
 let multer = require('multer');
+let moment = require('moment');
 
 let vt_videos = require('../../../model/vt_videos');
 let vt_comments = require('../../../model/vt_comments');
 let vt_users = require('../../../model/vt_users');
-let AdminAuth = require('../../../commonFunctions/AdminAuth');
+let vt_favourites = require('../../../model/vt_favourites');
+let UserAuth = require('../../../commonFunctions/UserAuth');
+let getUserId = require('../../../commonFunctions/getUserId');
 
 let upload = multer();
 let router = express.Router();
 
-router.get('/get-video', upload.none(), (req, res) => {
+router.get('/get-video-detail', upload.none(), async (req, res) => {
 
   let video_id = req.query.id;
+  let user_id = await getUserId(req);
 
   // Authenticate Admin with token and then proceed
-  AdminAuth(req, res, (status) => {
+  UserAuth(req, res, (status) => {
     if (status) {
       vt_videos.findOne({
         where: {
@@ -35,12 +39,13 @@ router.get('/get-video', upload.none(), (req, res) => {
             let result = {
               id: id,
               title: title,
+              url: url,
+              featured_img: featured_img,
               content: content,
               categories: categories,
               tags: tags,
               brands: brands,
-              featured_img: featured_img,
-              url: url,
+              is_favourite: await getIsfavourite(user_id, id),
               created_by: created_by,
               created_at: created_at,
               updated_at: updated_at,
@@ -80,7 +85,7 @@ async function getComments(id) {
           reply_to: comment.reply_to,
           reply_id: comment.reply_id,
           posted_by: comment.vt_user.fullname,
-          posted_at: comment.posted_at,
+          posted_at: moment(comment.posted_at).format('D/M/YYYY'),
           updated_at: comment.updated_at,
           reply_comments: await getInnerComments(comment.id)
         }
@@ -112,13 +117,30 @@ async function getInnerComments(id) {
           reply_to: item.reply_to,
           reply_id: item.reply_id,
           posted_by: item.vt_user.fullname,
-          posted_at: item.posted_at,
+          posted_at: moment(item.posted_at).format('D/M/YYYY'),
           updated_at: item.updated_at
         }
         comments[cindex] = commentItem;
       })
       return comments;
     })
+}
+
+async function getIsfavourite(user_id, id){
+  return vt_favourites.findOne({
+    where:{
+      user_id: user_id
+    }
+  })
+  .then((favourite) => {
+    if(favourite !== null){
+      let videos_fav = (favourite.videos).split(',');
+      if(videos_fav.includes(`${id}`)){
+        return true;
+      }
+    }
+    return false;
+  })
 }
 
 module.exports = router;

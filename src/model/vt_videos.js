@@ -7,7 +7,7 @@ let vt_videos = conn.define('vt_videos', {
     primaryKey: true
   },
   title: DataTypes.STRING,
-  description: DataTypes.STRING,
+  content: DataTypes.STRING,
   categories: DataTypes.STRING,
   brands: DataTypes.STRING,
   tags: DataTypes.STRING,

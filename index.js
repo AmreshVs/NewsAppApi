@@ -4,12 +4,20 @@ let app = express();
 let bodyParser = require("body-parser");
 let cors = require('cors');
 
+// User API
 let signup = require('./src/routes/user/signup'); // POST - /signup
 let login = require('./src/routes/user/login'); // POST - /login
 let latestNews = require('./src/routes/user/home/latestNews'); // GET - /latest-news
 let topSection = require('./src/routes/user/home/topSection'); // GET - /top-section  
 let sendOtp = require('./src/routes/common/sendOtp'); // POST - /send-otp
 
+let getNewsDetail = require('./src/routes/user/detail/getNews'); // GET - /get-news-detail
+let getVideoDetail = require('./src/routes/user/detail/getVideo'); // GET - /get-video-detail
+
+let addFavourites = require('./src/routes/user/favourites/add-favourites'); // POST - /add-favourites
+let GetFavItems = require('./src/routes/user/favourites/get-fav-items'); // GET - /get-fav-items
+
+// Admin API
 let alogin = require('./src/routes/admin/alogin'); // POST - /alogin
 let asignup = require('./src/routes/admin/asignup'); // POST - /asignup
 
@@ -61,7 +69,10 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
 // App User Routes
-app.use([signup, login, addComment, sendOtp, latestNews, topSection]);
+app.use([
+  signup, login, addComment, sendOtp, latestNews, topSection,
+  getNewsDetail, getVideoDetail, addFavourites, GetFavItems
+]);
 
 // Admin Routes
 app.use([
