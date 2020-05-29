@@ -15,7 +15,9 @@ let getNewsDetail = require('./src/routes/user/detail/getNews'); // GET - /get-n
 let getVideoDetail = require('./src/routes/user/detail/getVideo'); // GET - /get-video-detail
 
 let addFavourites = require('./src/routes/user/favourites/add-favourites'); // POST - /add-favourites
-let GetFavItems = require('./src/routes/user/favourites/get-fav-items'); // GET - /get-fav-items
+let getFavItems = require('./src/routes/user/favourites/get-fav-items'); // GET - /get-fav-items
+
+let getAllUserPdf = require('./src/routes/user/pdf/getAllPdf');
 
 // Admin API
 let alogin = require('./src/routes/admin/alogin'); // POST - /alogin
@@ -71,7 +73,8 @@ app.use(bodyParser.urlencoded({extended: true}));
 // App User Routes
 app.use([
   signup, login, addComment, sendOtp, latestNews, topSection,
-  getNewsDetail, getVideoDetail, addFavourites, GetFavItems
+  getNewsDetail, getVideoDetail, addFavourites, getFavItems,
+  getAllUserPdf
 ]);
 
 // Admin Routes

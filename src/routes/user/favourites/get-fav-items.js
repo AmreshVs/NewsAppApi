@@ -133,6 +133,7 @@ function getPdfs(pdfs){
           type: 'pdf',
           id: pdf.id,
           featured_img: pdf.featured_img,
+          url: pdf.url,
           title: pdf.title,
         }
       }
