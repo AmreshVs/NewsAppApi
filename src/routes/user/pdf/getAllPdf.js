@@ -2,6 +2,7 @@ let express = require('express');
 let multer = require('multer');
 let _ = require('lodash');
 let moment = require('moment');
+let { Op } = require('sequelize');
 
 let config = require('../../../config/config');
 let vt_pdfs = require('../../../model/vt_pdfs');
@@ -15,9 +16,20 @@ router.get('/get-all-user-pdf', upload.none(), async (req, res) => {
 
   let page = parseInt(req.query.page);
   let size = parseInt(req.query.size);
+  let startDate = new Date(req.query.startDate);
+  let endDate = new Date(req.query.endDate);
 
   // Run category once
   global.category_data = await getCategory();
+  global.where = {};
+
+  if(startDate != 'Invalid Date' && endDate != 'Invalid Date'){
+    global.where = {
+      created_at: {
+        [Op.between]: [moment(startDate).add(1, 'days').utc().startOf('day'), moment(endDate).add(1, 'days').utc().endOf('day')]
+      }
+    }
+  }
 
   // Authenticate Admin with token and then proceed
   UserAuth(req, res, (status) => {
@@ -27,8 +39,9 @@ router.get('/get-all-user-pdf', upload.none(), async (req, res) => {
         limit: size,
         offset: page === 1 ? 0 : page === 2 ? size : (page - 1) * size,
         order: [
-          ['id', 'ASC']
+          ['created_at', 'DESC']
         ],
+        where
       })
         .then((data) => {
 
@@ -46,14 +59,14 @@ router.get('/get-all-user-pdf', upload.none(), async (req, res) => {
             data = data.rows.map((pdf) => {
 
               // Send in the Categories and brands Id with comma seperated (1,2) to Category and brand names (Media, Breaking News)
-              let categories = joinCategory(pdf.categories);
+              // let categories = joinCategory(pdf.categories);
               
               return {
                 id: pdf.id,
                 featured_img: pdf.featured_img,
                 url: pdf.url,
                 // categories: categories,
-                posted_on: pdf.updated_at !== null ? moment(pdf.updated_at).format('D/M/YYYY') : pdf.created_at !== null ? moment(pdf.created_at).format('D/M/YYYY') : '-'
+                posted_on: moment(pdf.created_at).format('DD/MM/YYYY')
               }
             })
             res.status(200).send({ status: 200, message: '', data: data, pagination: pagination });

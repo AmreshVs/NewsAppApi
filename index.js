@@ -17,7 +17,11 @@ let getVideoDetail = require('./src/routes/user/detail/getVideo'); // GET - /get
 let addFavourites = require('./src/routes/user/favourites/add-favourites'); // POST - /add-favourites
 let getFavItems = require('./src/routes/user/favourites/get-fav-items'); // GET - /get-fav-items
 
-let getAllUserPdf = require('./src/routes/user/pdf/getAllPdf');
+let getAllUserPdf = require('./src/routes/user/pdf/getAllPdf'); // GET - /get-all-user-pdf
+let getAllUserCategory = require('./src/routes/user/category/getAllCategory'); // GET - /get-all-user-category
+
+let newsByCategory = require('./src/routes/user/newsByCategory/index'); // GET - /news-by-category
+let pdfByCategory = require('./src/routes/user/newsByCategory/pdfByCategory'); // GET - /news-by-category
 
 // Admin API
 let alogin = require('./src/routes/admin/alogin'); // POST - /alogin
@@ -74,7 +78,8 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use([
   signup, login, addComment, sendOtp, latestNews, topSection,
   getNewsDetail, getVideoDetail, addFavourites, getFavItems,
-  getAllUserPdf
+  getAllUserPdf, getAllUserCategory, newsByCategory,
+  pdfByCategory
 ]);
 
 // Admin Routes
