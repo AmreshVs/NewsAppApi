@@ -9,6 +9,7 @@ const UserAuth = (req, res, fn) => {
   }
 
   vt_users.findOne({
+    attributes: ['id'],
     where:{
       token: token,
       is_verified: 1

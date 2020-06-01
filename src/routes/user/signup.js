@@ -23,7 +23,8 @@ router.post('/signup', upload.none(), (req, res) => {
     mobile: body.mobile,
     is_verified: false,
     otp: otp,
-    token: token
+    token: token,
+    notification_id: body.notification_id
   }
 
   if(validate(req.body, res)){
@@ -55,7 +56,8 @@ router.post('/signup', upload.none(), (req, res) => {
         })
         .then((data) => {
           data.update({
-            is_verified: true
+            is_verified: true,
+            notification_id: body.notification_id
           })
           .then((data) => {
             res.send({
@@ -67,7 +69,7 @@ router.post('/signup', upload.none(), (req, res) => {
                 citystate: data.citystate,
                 mobile: data.mobile,
                 token: data.token,
-                onesignal_id: data.onesignal_id
+                notification_id: data.notification_id
               }
             });
           })

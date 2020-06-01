@@ -48,7 +48,8 @@ router.post('/login', upload.none(), (req, res) => {
           .then((data) => {
             if(data){
               data.update({
-                token: token
+                token: token,
+                notification_id: body.notification_id
               })
               .then((data) => {
                 res.send({
@@ -60,7 +61,7 @@ router.post('/login', upload.none(), (req, res) => {
                     citystate: data.citystate,
                     mobile: data.mobile,
                     token: data.token,
-                    onesignal_id: data.onesignal_id
+                    notification_id: data.notification_id
                   }
                 });
               })

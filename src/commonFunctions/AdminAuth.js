@@ -9,6 +9,7 @@ const AdminAuth = (req, res, fn) => {
   }
 
   vt_int_users.findOne({
+    attributes: ['id'],
     where:{
       token: token,
       is_verified: 1

@@ -8,7 +8,8 @@ let vt_users = conn.define('vt_users', {
   otp: DataTypes.INTEGER,
   is_verified: DataTypes.BOOLEAN,
   token: DataTypes.STRING,
-  onesignal_id: DataTypes.STRING
+  notification_token: DataTypes.STRING,
+  notifications_viewed: DataTypes.STRING
 });
 
 module.exports = vt_users;

@@ -23,6 +23,10 @@ let getAllUserCategory = require('./src/routes/user/category/getAllCategory'); /
 let newsByCategory = require('./src/routes/user/newsByCategory/index'); // GET - /news-by-category
 let pdfByCategory = require('./src/routes/user/newsByCategory/pdfByCategory'); // GET - /news-by-category
 
+let addNotification = require('./src/routes/user/notifications/addNotification'); // POST - /add-notification
+let listNotifications = require('./src/routes/user/notifications/listNotifications'); // POST - /list-notifications
+let viewNotification = require('./src/routes/user/notifications/viewNotification'); // POST - /list-notifications
+
 // Admin API
 let alogin = require('./src/routes/admin/alogin'); // POST - /alogin
 let asignup = require('./src/routes/admin/asignup'); // POST - /asignup
@@ -79,7 +83,7 @@ app.use([
   signup, login, addComment, sendOtp, latestNews, topSection,
   getNewsDetail, getVideoDetail, addFavourites, getFavItems,
   getAllUserPdf, getAllUserCategory, newsByCategory,
-  pdfByCategory
+  pdfByCategory, addNotification, listNotifications, viewNotification
 ]);
 
 // Admin Routes
