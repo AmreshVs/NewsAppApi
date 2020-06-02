@@ -1,8 +1,8 @@
 // let mysql = require('mysql');
 let Sequelize = require('sequelize');
 
-let mysqlConnection = new Sequelize('valartamilapi', 'root', '', {
-  host: 'localhost',
+let mysqlConnection = new Sequelize('amconsul_valartamilapi', 'amconsul_amresh', 'Amresh007!', {
+  host: '162.241.87.182',
   port: 3306,
   dialect: 'mysql',
   define:{
