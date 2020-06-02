@@ -104,5 +104,5 @@ app.use([
 // Dummy Data Routes
 app.use([dummyPosts, dummyPdfs, dummyVideos]);
 
-console.log("Running on port " + process.env.PORT);
+console.log("Running LIVE on port " + process.env.PORT);
 app.listen(process.env.PORT);
