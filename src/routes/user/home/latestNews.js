@@ -36,6 +36,7 @@ router.get('/latest-news', upload.none(), (req, res) => {
 
       let result = {
         status: 200,
+        check: 'test',
         data: AllNewsData,
         pagination: pagination
       }
