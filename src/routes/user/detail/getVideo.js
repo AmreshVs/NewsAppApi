@@ -69,8 +69,8 @@ async function getComments(id) {
   const creator = vt_comments.belongsTo(vt_users, { foreignKey: 'user_id' });
   return await vt_comments.findAll({
     where: {
-      comment_type: 'video',
-      reply_to: 'post',
+      comment_type: 'post',
+      reply_to: 'video',
       reply_id: id
     },
     include: [creator]
@@ -101,7 +101,7 @@ async function getInnerComments(id) {
   const creator = vt_comments.belongsTo(vt_users, { foreignKey: 'user_id' });
   return await vt_comments.findAll({
     where: {
-      comment_type: 'video',
+      comment_type: 'post',
       reply_to: 'comment',
       reply_id: id
     },

@@ -18,6 +18,7 @@ let addFavourites = require('./src/routes/user/favourites/add-favourites'); // P
 let getFavItems = require('./src/routes/user/favourites/get-fav-items'); // GET - /get-fav-items
 
 let getAllUserPdf = require('./src/routes/user/pdf/getAllPdf'); // GET - /get-all-user-pdf
+let getUserPdf = require('./src/routes/user/pdf/getPdf'); // GET - /get-user-pdf
 let getAllUserCategory = require('./src/routes/user/category/getAllCategory'); // GET - /get-all-user-category
 
 let newsByCategory = require('./src/routes/user/newsByCategory/index'); // GET - /news-by-category
@@ -26,6 +27,9 @@ let pdfByCategory = require('./src/routes/user/newsByCategory/pdfByCategory'); /
 let addNotification = require('./src/routes/user/notifications/addNotification'); // POST - /add-notification
 let listNotifications = require('./src/routes/user/notifications/listNotifications'); // POST - /list-notifications
 let viewNotification = require('./src/routes/user/notifications/viewNotification'); // POST - /list-notifications
+
+let editProfile = require('./src/routes/user/profile/editProfile'); // POST - /edit-profile
+let viewProfile = require('./src/routes/user/profile/viewProfile'); // POST - /view-profile
 
 // Admin API
 let alogin = require('./src/routes/admin/alogin'); // POST - /alogin
@@ -83,7 +87,8 @@ app.use([
   signup, login, addComment, sendOtp, latestNews, topSection,
   getNewsDetail, getVideoDetail, addFavourites, getFavItems,
   getAllUserPdf, getAllUserCategory, newsByCategory,
-  pdfByCategory, addNotification, listNotifications, viewNotification
+  pdfByCategory, addNotification, listNotifications, viewNotification,
+  editProfile, viewProfile, getUserPdf
 ]);
 
 // Admin Routes

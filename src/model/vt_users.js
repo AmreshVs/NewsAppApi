@@ -9,7 +9,9 @@ let vt_users = conn.define('vt_users', {
   is_verified: DataTypes.BOOLEAN,
   token: DataTypes.STRING,
   notification_token: DataTypes.STRING,
-  notifications_viewed: DataTypes.STRING
+  notifications_viewed: DataTypes.STRING,
+  created_at: DataTypes.DATE,
+  updated_at: DataTypes.DATE
 });
 
 module.exports = vt_users;

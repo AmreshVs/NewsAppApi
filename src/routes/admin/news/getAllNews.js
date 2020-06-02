@@ -12,7 +12,7 @@ let AdminAuth = require('../../../commonFunctions/AdminAuth');
 let upload = multer();
 let router = express.Router();
 
-router.get('/get-all-post', upload.none(), async (req, res) => {
+router.get('/get-all-news', upload.none(), async (req, res) => {
 
   let page = parseInt(req.query.page);
   let size = parseInt(req.query.size);

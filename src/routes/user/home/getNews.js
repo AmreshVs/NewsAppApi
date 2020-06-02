@@ -32,14 +32,51 @@ const getNews = async (page, size) => {
     })
 }
 
-const getComments = async (id) => {
-  return await vt_comments.count({
-    where: {
-      id: id
+// const getComments = async (id) => {
+//   return await vt_comments.count({
+//     where: {
+//       reply_to: 'news',
+//       id: id
+//     }
+//   })
+//   .then((data) => {
+//     return data;
+//   })
+// }
+
+async function getComments(id){
+  return await vt_comments.findAll({
+    where:{
+      comment_type: 'post',
+      reply_to: 'news',
+      reply_id: id
+    },
+  })
+  .then(async (data) => {
+    let count = 0;
+    let innerCommentsCount = 0;
+    for(let [index, comment] of data.entries()){
+      innerCommentsCount = await getInnerComments(comment.id);
+      count += innerCommentsCount + 1;
     }
+    return count;
+  })
+}
+
+async function getInnerComments(id){
+  return await vt_comments.findAll({
+    where:{
+      comment_type: 'post',
+      reply_to: 'comment',
+      reply_id: id
+    },
   })
   .then((data) => {
-    return data;
+    let innerCount = 0;
+    for(let item of data){
+      innerCount++;
+    }
+    return innerCount;
   })
 }
 
