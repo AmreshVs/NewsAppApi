@@ -15,7 +15,7 @@ router.post('/add-notification', upload.none(), (req, res) => {
       vt_notifications.create({ payload: JSON.stringify(body), notify_to: 'all' })
       .then((data) => {
         if(data !== null){
-          let notification_body = { ...body, data: {...body.data, notification_id: data.null } };
+          let notification_body = { ...body, to: "/topics/news", data: {...body.data, notification_id: data.null } };
           
           axios({
             method: 'POST',

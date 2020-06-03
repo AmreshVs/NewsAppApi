@@ -32,7 +32,7 @@ router.get('/get-all-news', upload.none(), async (req, res) => {
         limit: size,
         offset: page === 1 ? 0 : page === 2 ? size : (page - 1) * size,
         order: [
-          ['id', 'ASC']
+          ['created_at', 'DESC']
         ],
         include: [creator]
       })

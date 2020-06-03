@@ -32,7 +32,7 @@ router.get('/get-all-video', upload.none(), async (req, res) => {
         limit: size,
         offset: page === 1 ? 0 : page === 2 ? size : (page - 1) * size,
         order: [
-          ['id', 'ASC']
+          ['created_at', 'DESC']
         ],
         include: [creator]
       })
@@ -58,6 +58,7 @@ router.get('/get-all-video', upload.none(), async (req, res) => {
               return {
                 id: item.id,
                 featured_img: item.featured_img,
+                url: item.url,
                 title: item.title,
                 categories: categories,
                 brands: brands,

@@ -27,6 +27,7 @@ let pdfByCategory = require('./src/routes/user/newsByCategory/pdfByCategory'); /
 let addNotification = require('./src/routes/user/notifications/addNotification'); // POST - /add-notification
 let listNotifications = require('./src/routes/user/notifications/listNotifications'); // POST - /list-notifications
 let viewNotification = require('./src/routes/user/notifications/viewNotification'); // POST - /list-notifications
+let SubToTopic = require('./src/routes/user/notifications/subToTopic'); // POST - /sub-to-topic
 
 let editProfile = require('./src/routes/user/profile/editProfile'); // POST - /edit-profile
 let viewProfile = require('./src/routes/user/profile/viewProfile'); // POST - /view-profile
@@ -34,6 +35,8 @@ let viewProfile = require('./src/routes/user/profile/viewProfile'); // POST - /v
 // Admin API
 let alogin = require('./src/routes/admin/alogin'); // POST - /alogin
 let asignup = require('./src/routes/admin/asignup'); // POST - /asignup
+
+let summary = require('./src/routes/admin/summary'); // POST - /summary
 
 let newPost = require('./src/routes/admin/news/newNews'); // POST - /new-news
 let getPost = require('./src/routes/admin/news/getNews'); // GET - /get-news
@@ -88,7 +91,7 @@ app.use([
   getNewsDetail, getVideoDetail, addFavourites, getFavItems,
   getAllUserPdf, getAllUserCategory, newsByCategory,
   pdfByCategory, addNotification, listNotifications, viewNotification,
-  editProfile, viewProfile, getUserPdf
+  editProfile, viewProfile, getUserPdf, SubToTopic
 ]);
 
 // Admin Routes
@@ -98,7 +101,7 @@ app.use([
   deleteCategory, getAllCategory, addBrand, getBrand,
   getAllBrand, deleteBrand, categories, brands, pdfUpload,
   addPdf, getAllPdf, getPdf, deletePdf, videoUpload, addVideo,
-  getAllVideo, getVideo, deleteVideo
+  getAllVideo, getVideo, deleteVideo, summary
 ]);
 
 // Dummy Data Routes
