@@ -32,9 +32,9 @@ router.post('/login', upload.none(), (req, res) => {
             otp: otp
           })
           .then(() => {
-            if(SendOtp(body.mobile, `Use ${otp} as your OTP to verify ${body.autoOtpHash}`)){
+            // if(SendOtp(body.mobile, `Use ${otp} as your OTP to verify ${body.autoOtpHash}`)){
               res.send({ status: 200, message: 'OTP sent to registered mobile number' });
-            }
+            // }
           })
         }
         else{

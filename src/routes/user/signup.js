@@ -38,9 +38,9 @@ router.post('/signup', upload.none(), (req, res) => {
         // If mobile number not present, Create user and set the user verified
         if(!body.otp){
           vt_users.create(DbData).then(() => {
-            if(SendOtp(body.mobile, `Use ${otp} as your OTP to verify ${body.autoOtpHash}`)){
+            // if(SendOtp(body.mobile, `Use ${otp} as your OTP to verify ${body.autoOtpHash}`)){
               res.send({status: 200, message: 'OTP sent to registered mobile number'});
-            }
+            // }
           })
         }
       }
