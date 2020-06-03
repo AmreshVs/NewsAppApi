@@ -11,7 +11,6 @@ let getNews = require('./getNews');
 let getVideos = require('./getVideos');
 
 router.get('/latest-news', upload.none(), (req, res) => {
-  
   let page = parseInt(req.query.page);
   let size = parseInt(req.query.size);
 

@@ -3,7 +3,7 @@ let vt_users = require('../model/vt_users');
 const UserAuth = (req, res, fn) => {
   let token = req.headers.authorization;
 
-  if(token === undefined){
+  if(token === undefined || token === null || token === ''){
     res.status(401).send({status: 200, message: 'Token cannot be empty'});
     return fn(false);
   }

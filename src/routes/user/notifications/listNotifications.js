@@ -4,6 +4,7 @@ let multer = require('multer');
 let upload = multer();
 let router = express.Router();
 
+let config = require('../../../config/config');
 let UserAuth = require('../../../commonFunctions/UserAuth');
 let vt_notifications = require('../../../model/vt_notifications');
 let getNotificationViewed = require('../../../commonFunctions/getNotificationViewed');

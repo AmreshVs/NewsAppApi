@@ -12,6 +12,7 @@ let router = express.Router();
 router.post('/login', upload.none(), (req, res) => {
   
   let body = req.body;
+  
   // Generate token for Authentication
   let token = jwt.sign({ id: body.email }, config.secret);
   
@@ -49,7 +50,7 @@ router.post('/login', upload.none(), (req, res) => {
             if(data){
               data.update({
                 token: token,
-                notification_id: body.notification_id
+                notification_token: body.notification_token
               })
               .then((data) => {
                 res.send({
@@ -61,7 +62,7 @@ router.post('/login', upload.none(), (req, res) => {
                     citystate: data.citystate,
                     mobile: data.mobile,
                     token: data.token,
-                    notification_id: data.notification_id
+                    notification_token: data.notification_token
                   }
                 });
               })
