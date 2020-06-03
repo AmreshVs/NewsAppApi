@@ -15,8 +15,8 @@ router.post('/login', upload.none(), (req, res) => {
   // Generate token for Authentication
   let token = jwt.sign({ id: body.email }, config.secret);
   
-  let otp = Math.floor(Math.random() * (9999 - 1000 + 1)) + 1000;
-  // let otp = 1234;
+  // let otp = Math.floor(Math.random() * (9999 - 1000 + 1)) + 1000;
+  let otp = 1234;
 
   vt_users.findOne({
     where: {
