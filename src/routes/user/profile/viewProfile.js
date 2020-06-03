@@ -23,7 +23,7 @@ router.get('/view-profile', upload.none(), async (req, res) => {
         if(user !== null){
 
           let notification_count = await getNotificationCount();
-          let user_notification = user.notifications_viewed !== '' ? (user.notifications_viewed.split(',')).length : 0;
+          let user_notification = user.notifications_viewed !== '' && user.notifications_viewed !== null ? (user.notifications_viewed.split(',')).length : 0;
           let unread_notification = notification_count - user_notification;
 
           let data = {

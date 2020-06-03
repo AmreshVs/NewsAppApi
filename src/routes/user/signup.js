@@ -28,6 +28,7 @@ router.post('/signup', upload.none(), (req, res) => {
   }
 
   if(validate(req.body, res)){
+
     vt_users.findOne({
       where:{
         mobile: DbData.mobile
