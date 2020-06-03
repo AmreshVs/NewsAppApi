@@ -14,8 +14,8 @@ router.post('/signup', upload.none(), (req, res) => {
   // Generate Token for Authentication
   let token = jwt.sign({id: body.mobile}, config.secret);
   
-  // let otp = Math.floor(Math.random() * (9999 - 1000 + 1)) + 1000;
-  let otp = 1234;
+  let otp = Math.floor(Math.random() * (9999 - 1000 + 1)) + 1000;
+  // let otp = 1234;
 
   let DbData = {
     fullname: body.fullname,
