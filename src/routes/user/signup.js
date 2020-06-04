@@ -14,8 +14,8 @@ router.post('/signup', upload.none(), (req, res) => {
   // Generate Token for Authentication
   let token = jwt.sign({id: body.mobile}, config.secret);
   
-  // let otp = Math.floor(Math.random() * (9999 - 1000 + 1)) + 1000;
-  let otp = 1234;
+  let otp = Math.floor(Math.random() * (9999 - 1000 + 1)) + 1000;
+  // let otp = 1234;
 
   let DbData = {
     fullname: body.fullname,
@@ -39,9 +39,11 @@ router.post('/signup', upload.none(), (req, res) => {
         // If mobile number not present, Create user and set the user verified
         if(!body.otp){
           vt_users.create(DbData).then(() => {
-            // if(SendOtp(body.mobile, `Use ${otp} as your OTP to verify ${body.autoOtpHash}`)){
-              res.send({status: 200, message: 'OTP sent to registered mobile number'});
-            // }
+            let response = await SendOtp(body.mobile, `Use ${otp} as your OTP to verify ${body.autoOtpHash}`);
+            if(response === false){
+              res.send({ status: 401, message: 'Error Sending OTP' });
+            }
+            res.send({status: 200, message: 'OTP sent to registered mobile number'});
           })
         }
       }

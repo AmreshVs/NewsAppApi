@@ -12,12 +12,12 @@ let router = express.Router();
 router.post('/login', upload.none(), (req, res) => {
   
   let body = req.body;
-  
+
   // Generate token for Authentication
   let token = jwt.sign({ id: body.email }, config.secret);
   
-  // let otp = Math.floor(Math.random() * (9999 - 1000 + 1)) + 1000;
-  let otp = 1234;
+  let otp = Math.floor(Math.random() * (9999 - 1000 + 1)) + 1000;
+  // let otp = 1234;
 
   vt_users.findOne({
     where: {
@@ -32,10 +32,12 @@ router.post('/login', upload.none(), (req, res) => {
           data.update({
             otp: otp
           })
-          .then(() => {
-            // if(SendOtp(body.mobile, `Use ${otp} as your OTP to verify ${body.autoOtpHash}`)){
-              res.send({ status: 200, message: 'OTP sent to registered mobile number' });
-            // }
+          .then(async () => {
+            let response = await SendOtp(body.mobile, `Use ${otp} as your OTP to verify ${body.autoOtpHash}`);
+            if(response === false){
+              res.send({ status: 401, message: 'Error Sending OTP' });
+            }
+            res.send({ status: 200, message: 'OTP sent to registered mobile number' });
           })
         }
         else{
