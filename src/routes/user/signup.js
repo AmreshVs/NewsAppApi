@@ -38,7 +38,7 @@ router.post('/signup', upload.none(), (req, res) => {
       if(data === null){
         // If mobile number not present, Create user and set the user verified
         if(!body.otp){
-          vt_users.create(DbData).then(() => {
+          vt_users.create(DbData).then(async () => {
             let response = await SendOtp(body.mobile, `Use ${otp} as your OTP to verify ${body.autoOtpHash}`);
             if(response === false){
               res.send({ status: 401, message: 'Error Sending OTP' });
