@@ -5,7 +5,7 @@ let upload = multer();
 let router = express.Router();
 
 router.get('/', upload.none(), (req, res) => {
-  res.send('API Server is running');
+  res.send('Valar Tamil API Server is running');
 });
 
 module.exports = router;
