@@ -4,6 +4,8 @@ let app = express();
 let bodyParser = require("body-parser");
 let cors = require('cors');
 
+let root = require('./src/routes/index');
+
 // User API
 let signup = require('./src/routes/user/signup'); // POST - /signup
 let login = require('./src/routes/user/login'); // POST - /login
@@ -87,7 +89,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 
 // App User Routes
 app.use([
-  signup, login, addComment, sendOtp, latestNews, topSection,
+  root, signup, login, addComment, sendOtp, latestNews, topSection,
   getNewsDetail, getVideoDetail, addFavourites, getFavItems,
   getAllUserPdf, getAllUserCategory, newsByCategory,
   pdfByCategory, addNotification, listNotifications, viewNotification,

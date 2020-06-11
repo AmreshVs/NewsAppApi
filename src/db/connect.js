@@ -11,8 +11,8 @@ let Sequelize = require('sequelize');
 //   }
 // });
 
-let mysqlConnection = new Sequelize('amconsul_valartamilapi', 'amconsul_amresh', 'Amresh007!', {
-  host: '162.241.87.182',
+let mysqlConnection = new Sequelize('amconso4_valartamilapi', 'amconso4_app', 'N$Q,pJqD)a;_', {
+  host: 'localhost',
   port: 3306,
   dialect: 'mysql',
   define:{
