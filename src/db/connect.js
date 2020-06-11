@@ -12,7 +12,7 @@ let Sequelize = require('sequelize');
 // });
 
 let mysqlConnection = new Sequelize('amconso4_valartamilapi', 'amconso4_app', 'N$Q,pJqD)a;_', {
-  host: 'localhost',
+  host: '162.241.87.182',
   port: 3306,
   dialect: 'mysql',
   define:{
