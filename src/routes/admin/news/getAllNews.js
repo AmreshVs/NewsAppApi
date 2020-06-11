@@ -107,7 +107,7 @@ function joinCategory(categories){
   let category_array = [];
   categories_split.map((item) => {
     let index = _.findKey(global.category_data, { 'id': parseInt(item) });
-    category_array.push(global.category_data[index].name);
+    category_array.push(global.category_data[index].name !== undefined ? global.category_data[index].name : '');
   })
   return category_array;
 }
@@ -117,7 +117,7 @@ function joinBrand(brands){
   let brand_array = [];
   brands_split.map((item) => {
     let index = _.findKey(global.brand_data, { 'id': parseInt(item) });
-    brand_array.push(global.brand_data[index].name);
+    brand_array.push(global.brand_data[index].name !== undefined ? global.brand_data[index].name : '');
   })
   return brand_array;
 }
