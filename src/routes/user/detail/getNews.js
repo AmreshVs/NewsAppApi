@@ -132,11 +132,16 @@ async function getIsfavourite(user_id, id){
     }
   })
   .then((favourite) => {
-    let news_fav = (favourite.news).split(',');
-    if(news_fav.includes(`${id}`)){
-      return true;
+    if(favourite !== null){
+      let news_fav = (favourite.news).split(',');
+      if(news_fav.includes(`${id}`)){
+        return true;
+      }
+      return false;
     }
-    return false;
+    else{
+      return false;
+    }
   })
 }
 

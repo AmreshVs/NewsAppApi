@@ -19,14 +19,14 @@ router.get('/get-fav-items', upload.none(), async (req, res) => {
   global.page = parseInt(req.query.page);
   global.size = parseInt(req.query.size);
   let user_id = await getUserId(req);
-
+  
   UserAuth(req, res, async (status) => {
     if (status) {
       let { news, videos, pdfs } = await getFavourites(user_id);
       let newsData = await getNews(news);
       let videosData = await getVideos(videos);
       let pdfsData = await getPdfs(pdfs);
-     
+      
       let AllNewsData = _.sortBy({ ...newsData, ...videosData, ...pdfsData }, {'title': 'desc'});
       
        // Pagination
@@ -53,11 +53,16 @@ function getFavourites(user_id){
     }
   })
   .then((favourite) => {
+
     if(favourite !== null){
       let news = (favourite.news).split(',');
       let videos = (favourite.videos).split(',');
       let pdfs = (favourite.pdfs).split(',');
+
       return { news, videos, pdfs };
+    }
+    else{
+      return { news: [], videos: [], pdfs: [] };
     }
   })
 }

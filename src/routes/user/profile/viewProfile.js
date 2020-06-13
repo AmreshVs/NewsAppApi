@@ -62,9 +62,14 @@ const favouriteCounts = async (id) => {
     }
   })
   .then((favourite) => {
-    let news = favourite.news !== '' ? (favourite.news.split(',')).length : 0;
-    let videos = favourite.videos !== '' ? (favourite.videos.split(',')).length : 0;
-    let pdfs = favourite.pdfs !== '' ? (favourite.pdfs.split(',')).length : 0;
-    return news + videos + pdfs;
+    if(favourite !== null){
+      let news = favourite.news !== '' ? (favourite.news.split(',')).length : 0;
+      let videos = favourite.videos !== '' ? (favourite.videos.split(',')).length : 0;
+      let pdfs = favourite.pdfs !== '' ? (favourite.pdfs.split(',')).length : 0;
+      return news + videos + pdfs;
+    }
+    else{
+      return 0;
+    }
   })
 }

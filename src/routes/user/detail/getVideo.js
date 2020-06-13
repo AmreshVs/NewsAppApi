@@ -138,8 +138,11 @@ async function getIsfavourite(user_id, id){
       if(videos_fav.includes(`${id}`)){
         return true;
       }
+      return false;
     }
-    return false;
+    else{
+      return false;
+    }
   })
 }
 
