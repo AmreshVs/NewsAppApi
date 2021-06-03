@@ -21,7 +21,7 @@ router.post('/add-notification', upload.none(), (req, res) => {
             method: 'POST',
             url: 'https://fcm.googleapis.com/fcm/send',
             headers:{
-              'Authorization': 'key=AAAA7Bw8-Ws:APA91bHMXUIvrcBtt_f8z8TM2cxcZ4iYoSrPR4v8b9A0I6wVQD80rHcHQOkhAFGHqLdGxX6ylHrcYxHN8TngQh-IcP6v14i6E585za2cS8SG6eoIxAbJoOVK8hEHAXZFxSqYrvlPg8nP',
+              'Authorization': 'key=authorization_key',
               'Content-Type': 'application/json'
             },
             data: notification_body
